@@ -46,8 +46,8 @@ class SparkMonkey:
         self.utils = Utils()
         self.scorer = Scorer()
         self.config = configparser.ConfigParser()
-        print(pkgutil.get_data_smart(__name__, "config/config.cfg"))
-        read_status = self.config.read(pkgutil.get_data_smart(__name__, "config/config.cfg"))
+        print(get_data_smart(__name__, "config/config.cfg"))
+        read_status = self.config.read(get_data_smart(__name__, "config/config.cfg"))
         print(read_status)
 
 
