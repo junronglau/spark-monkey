@@ -1,0 +1,4 @@
+.SparkMonkey.egg-info
+.build
+.dist
+.venv
