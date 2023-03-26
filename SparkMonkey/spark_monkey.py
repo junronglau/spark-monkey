@@ -8,7 +8,7 @@ from ast import literal_eval
 import pandas as pd
 import requests as re
 from tqdm import tqdm
-import pkg_resources
+import pkgutil
 
 from SparkMonkey.scorer.scorer import Scorer
 from SparkMonkey.utils.utils import Utils
@@ -19,7 +19,8 @@ class SparkMonkey:
         self.utils = Utils()
         self.scorer = Scorer()
         self.config = configparser.ConfigParser()
-        read_status = self.config.read(pkg_resources.resource_stream(__name__, 'config/config.cfg'))
+        print(pkgutil.get_data(__name__, "config/config.cfg"))
+        read_status = self.config.read(pkgutil.get_data(__name__, "config/config.cfg"))
         print(read_status)
 
 
