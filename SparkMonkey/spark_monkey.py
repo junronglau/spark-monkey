@@ -56,11 +56,11 @@ class SparkMonkey:
         SCHEMAS
         """
         schema_config = dict(self.config.items('response_schema'))
-        self.job_df_columns = schema_config['job_df_columns']
-        self.stage_df_columns = schema_config['stage_df_columns']
-        self.stage_details_df_columns = schema_config['stage_details_df_columns']
-        self.task_list_df_columns = schema_config['task_list_df_columns']
-        self.sql_list_columns = schema_config['sql_list_columns']
+        self.job_df_columns = list(schema_config['job_df_columns'].split(","))
+        self.stage_df_columns = list(schema_config['stage_df_columns'].split(","))
+        self.stage_details_df_columns = list(schema_config['stage_details_df_columns'].split(","))
+        self.task_list_df_columns = list(schema_config['task_list_df_columns'].split(","))
+        self.sql_list_columns = list(schema_config['sql_list_columns'].split(","))
 
         """
         INITIALIZE VARIABLES
