@@ -9,8 +9,8 @@ import pandas as pd
 import requests as re
 from tqdm import tqdm
 
-from scorer.scorer import Scorer
-from utils.utils import Utils
+from SparkMonkey.scorer.scorer import Scorer
+from SparkMonkey.utils.utils import Utils
 
 
 class SparkMonkey:
