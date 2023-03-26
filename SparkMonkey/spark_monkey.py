@@ -57,6 +57,7 @@ class SparkMonkey:
         """
         schema_config = dict(self.config.items('response_schema'))
         self.job_df_columns = list(schema_config['job_df_columns'].split(","))
+        print(self.job_df_columns)
         self.stage_df_columns = list(schema_config['stage_df_columns'].split(","))
         self.stage_details_df_columns = list(schema_config['stage_details_df_columns'].split(","))
         self.task_list_df_columns = list(schema_config['task_list_df_columns'].split(","))
