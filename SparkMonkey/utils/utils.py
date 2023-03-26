@@ -48,7 +48,7 @@ class Utils:
     def get_dbutils(self):
         return self._get_dbutils(self.spark)
 
-    def get_data_smart(package, resource, as_string=False):
+    def get_data_smart(self, package, resource, as_string=False):
         """Rewrite of pkgutil.get_data() that actually lets the user determine if data should
         be returned read into memory (aka as_string=True) or just return the file path.
         """
