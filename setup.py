@@ -4,6 +4,7 @@ setup(
     name='SparkMonkey',
     version='1.01',
     packages=find_packages(),
+    package_data={'': ['./config/config.cfg']},
     url='',
     license='',
     author='junrong.lau',
