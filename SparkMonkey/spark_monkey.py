@@ -19,7 +19,7 @@ class SparkMonkey:
         self.scorer = Scorer()
         self.config = configparser.ConfigParser()
         self.config.read('config/config.cfg')
-        print(self.config.sections())
+
         """
         AUTHENTICATION
         """
