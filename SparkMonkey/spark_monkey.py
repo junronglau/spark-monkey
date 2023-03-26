@@ -17,9 +17,9 @@ class SparkMonkey:
     def __init__(self, databricks_host_url):
         self.utils = Utils()
         self.scorer = Scorer()
-        self.config = configparser.RawConfigParser()
+        self.config = configparser.ConfigParser()
         self.config.read('./config/config.cfg')
-
+        print(self.config.sections())
         """
         AUTHENTICATION
         """
