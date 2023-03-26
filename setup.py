@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='SparkMonkey',
     version='1.01',
-    packages=find_packages() + ['./SparkMonkey/config'],
+    packages=find_packages() + ['./config'],
     url='',
     license='',
     author='junrong.lau',
