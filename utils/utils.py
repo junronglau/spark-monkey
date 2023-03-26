@@ -12,7 +12,7 @@ class Utils:
         self.displayHTML = self.get_displayHTML()
 
     @staticmethod
-    def _get_dbutils(spark: SparkSession) -> DBUtils:
+    def _get_dbutils(spark: SparkSession):
         """
             get databricks utils
             Args:

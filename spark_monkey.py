@@ -1,3 +1,4 @@
+import configparser
 import itertools
 import json
 import re
@@ -8,7 +9,6 @@ import pandas as pd
 import requests as re
 from tqdm import tqdm
 
-import config.config
 from scorer.scorer import Scorer
 from utils.utils import Utils
 
@@ -17,6 +17,8 @@ class SparkMonkey:
     def __init__(self):
         self.utils = Utils()
         self.scorer = Scorer()
+        self.config = configparser.RawConfigParser()
+        self.config.read('./config/config.cfg')
 
         """
         AUTHENTICATION
@@ -37,26 +39,28 @@ class SparkMonkey:
         """
         SPARK UI ENDPOINTS
         """
-        self.all_application_endpoint = self.host_url + config.spark_ui_endpoints['all_application_endpoint']
-        self.all_executors_endpoint = self.host_url + config.spark_ui_endpoints['all_executors_endpoint']
-        self.all_jobs_endpoint = self.host_url + config.spark_ui_endpoints['all_jobs_endpoint']
-        self.jobs_details_endpoint = self.host_url + config.spark_ui_endpoints['jobs_details_endpoint']
-        self.all_stages_endpoint = self.host_url + config.spark_ui_endpoints['all_stages_endpoint']
-        self.stage_attempts_endpoint = self.host_url + config.spark_ui_endpoints['stage_attempts_endpoint']
-        self.stage_details_endpoint = self.host_url + config.spark_ui_endpoints['stage_details_endpoint']
-        self.task_summary_endpoint = self.host_url + config.spark_ui_endpoints['task_summary_endpoint']
-        self.task_list_endpoint = self.host_url + config.spark_ui_endpoints['task_list_endpoint']
-        self.sql_details_endpoint = self.host_url + config.spark_ui_endpoints['sql_details_endpoint']
-        self.sql_single_details_endpoint = self.host_url + config.spark_ui_endpoints['sql_single_details_endpoint']
+        endpoint_config = dict(self.config.items('spark_ui_endpoints'))
+        self.all_application_endpoint = self.host_url + endpoint_config['all_application_endpoint']
+        self.all_executors_endpoint = self.host_url + endpoint_config['all_executors_endpoint']
+        self.all_jobs_endpoint = self.host_url + endpoint_config['all_jobs_endpoint']
+        self.jobs_details_endpoint = self.host_url + endpoint_config['jobs_details_endpoint']
+        self.all_stages_endpoint = self.host_url + endpoint_config['all_stages_endpoint']
+        self.stage_attempts_endpoint = self.host_url + endpoint_config['stage_attempts_endpoint']
+        self.stage_details_endpoint = self.host_url + endpoint_config['stage_details_endpoint']
+        self.task_summary_endpoint = self.host_url + endpoint_config['task_summary_endpoint']
+        self.task_list_endpoint = self.host_url + endpoint_config['task_list_endpoint']
+        self.sql_details_endpoint = self.host_url + endpoint_config['sql_details_endpoint']
+        self.sql_single_details_endpoint = self.host_url + endpoint_config['sql_single_details_endpoint']
 
         """
         SCHEMAS
         """
-        self.job_df_columns = config.response_schema['job_df_columns']
-        self.stage_df_columns = config.response_schema['stage_df_columns']
-        self.stage_details_df_columns = config.response_schema['stage_details_df_columns']
-        self.task_list_df_columns = config.response_schema['task_list_df_columns']
-        self.sql_list_columns = config.response_schema['sql_list_columns']
+        schema_config = dict(self.config.items('response_schema'))
+        self.job_df_columns = schema_config['job_df_columns']
+        self.stage_df_columns = schema_config['stage_df_columns']
+        self.stage_details_df_columns = schema_config['stage_details_df_columns']
+        self.task_list_df_columns = schema_config['task_list_df_columns']
+        self.sql_list_columns = schema_config['sql_list_columns']
 
         """
         INITIALIZE VARIABLES
