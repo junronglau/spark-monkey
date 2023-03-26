@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='SparkMonkey',
@@ -8,6 +8,7 @@ setup(
     license='',
     author='junrong.lau',
     author_email='junronglau@gmai.com',
-    description='Tool to debug spark job performance',
-    install_requires=['wheel', 'bar', 'greek']
+    description='Python library to analyse and troubleshoot spark jobs performance',
+    packages=find_packages(include=['spark_monkey', 'spark_monkey.*']),
+    install_requires=['pandas', 'tqdm', 'scipy', 'numpy']
 )

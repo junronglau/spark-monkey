@@ -14,7 +14,7 @@ from utils.utils import Utils
 
 
 class SparkMonkey:
-    def __init__(self):
+    def __init__(self, databricks_host_url):
         self.utils = Utils()
         self.scorer = Scorer()
         self.config = configparser.RawConfigParser()
@@ -31,7 +31,7 @@ class SparkMonkey:
         """
         self.cluster_id = self.utils.spark.conf.get("spark.databricks.clusterUsageTags.clusterId")
         self.spark_context_id = self.utils.spark.conf.get("spark.databricks.sparkContextId")
-        self.databricks_url = 'adb-5382132230645028.8.azuredatabricks.net'
+        self.databricks_url = databricks_host_url
         self.org_id = self.utils.spark.conf.get("spark.databricks.clusterUsageTags.orgId")
         self.ui_port = self.utils.spark.sql("set spark.ui.port").collect()[0].value
         self.host_url = self.generate_host_url()
@@ -75,7 +75,7 @@ class SparkMonkey:
     def display_imported_message():
         print(""" You have imported the Spark M🙊nkey module
 
-      To get started: spark_monkey = SparkMonkey()
+      To get started: spark_monkey = SparkMonkey(host_url='adb-12345678.9.azuredatabricks.net')
       To start analysis on cluster: spark_monkey.diagnose_cluster()
       To visualize potential issues: spark_monkey.display_summary()
     """)
