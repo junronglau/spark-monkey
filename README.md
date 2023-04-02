@@ -17,31 +17,38 @@ There are 5 common bottlenecks / optimization oppurtunities that are detected by
 - Partition / Pushed Filters `Detects absence of partition or pushed filters for tables above 1 million rows`
 - Repeated queries `Detects repeated sections of your query - only works on clusters with smaller number of spark jobs (< 20)**` 
 
-
-# 🎯 How should I use this package effectively? 🎯
-
-- To begin, just simply import the module, run `diagnose_cluster` then `display_summary`end of your notebook after your pipeline has finished running
-- Then create a job and run this job on a `job only cluster` (Meaning choose a new job cluster when creating the databricks job) 
-- Thats all! You can refer to an example below in the *Usage* section
-
-# How to run on a job only cluster? (Or how to schedule a job in databricks)
-- Learn more about databricks jobs and what it can do [here](https://docs.databricks.com/workflows/jobs/jobs.html)
-
-# 🔎 Now I know the problems but how do i solve them? 🔎
-- WIP
-
 # Usage 
 
-to get started, clone or import the project
+To get started, clone or import the project
+
+`pip install git+https://github.com/junronglau/spark-monkey.git`
+
+`from SparkMonkey.spark_monkey import SparkMonkey`
+
+Instantiate the class
+
+`spark_monkey = SparkMonkey(databricks_host_url='adb-12345678.9.azuredatabricks.net')`
+
+After importing, run your queries or pipelines as per normal. At the end of the notebook, perform the analysis on the cluster using
+
+`spark_monkey.diagnose_cluster()`
+
+To display the summary of the issues faced
+
+`spark_monkey.display_summary()`
+
+There are other methods that allow us to retrieve all the Spark jobs or SQL queries in the history server, such as `spark_monkey.retrieve_all_sql()` or `spark_monkey.retrieve_all_jobs()`. Explore the SparkMonkey class for more methods.
 
 
+# 🔎 How do I solve some of the issues in my pipelines? 🔎
+- You can head over to my [Medium article](https://medium.com/@junronglau/speed-up-your-spark-queries-in-15-minutes-4a8da88942cf) to get fixes to common issues
 
 
-# Additional notes
-** You can run this on interactive clusters as well (i.e. Team based cluster, like analytics-transport cluster). However, if you import and use in interactive notebooks / clusters, note that other users and notebooks may be using the same team-based cluster, hence you can see all the issues detected for all queries ran on that cluster
+# Experimental features
 
-%md
+It is also ideal if this libary can automatically configure settings based on the bottlenecks. One idea is to identify the slow running stages caused by an inefficient shuffle activity, then recommend a shuffle repartitioning to minimize any chance of a data skew/spill. While it is not tested sufficiently, you can try it out by calling the `recommend_shuffle_partition` method
 
-# Roadmap
-- Provide a package to "Auto Treat" based on the task size
-- Provide visibility on query plans and bottlenecks in query plans leveraging on Graph Theory
+```
+recommended_partitions = spark_monkey.recommend_shuffle_partition(stage_id=123)
+spark.conf.set("spark.sql.shuffle.partitions", recommended_partitions)
+```
